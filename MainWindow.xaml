@@ -116,7 +116,7 @@
                 <Grid Width="300" HorizontalAlignment="Left">
                     <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Search here ..."
-                               Visibility="{Binding ElementName=txtSearch,Path=Text.Isempty, Converter={StaticResource BoolToVis}}"/>
+                               Visibility="{Binding ElementName=txtSearch,Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
                     <TextBox x:Name="txtSearch" Style="{StaticResource textboxSearch}"/>
                     <Icon:PackIconMaterial Kind="Magnify" Width="15" Height="15" VerticalAlignment="Center"
                                            Margin="0 0 15 0" Foreground="#b0b9c6" HorizontalAlignment="Right"/>
@@ -163,42 +163,40 @@
                 <Grid Width="200" HorizontalAlignment="Right" Grid.Row="4">
                     <TextBlock Margin="15 0" VerticalAlignment="Center" Foreground="#b0b9c6" IsHitTestVisible="False"
                                Panel.ZIndex="1" Text="Search in Members ..."
-                               Visibility="{Binding ElementName=txtFilter,Path=Text.Isempty, Converter={StaticResource BoolToVis}}"/>
+                               Visibility="{Binding ElementName=txtFilter,Path = Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
                     <TextBox x:Name="txtFilter" Style="{StaticResource textboxSearch}"/>
                 </Grid>
-                
+
                 <!--Memeber Datagrid-->
-                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
-                          RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" x:Name="membersDataGrid" SelectionChanged="membersDataGrid_SelectionChanged">
+                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" x:Name="membersDataGrid">
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto">
+                        <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                             <DataGridCheckBoxColumn.HeaderTemplate>
                                 <DataTemplate>
-                                    <CheckBox/>
+                                    <CheckBox Style="{StaticResource CheckBoxStyle1}"/>
                                 </DataTemplate>
                             </DataGridCheckBoxColumn.HeaderTemplate>
                         </DataGridCheckBoxColumn>
 
-                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto"/>
+                        <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Number}"/>
 
-                        <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="*">
+                        <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="Red">
-                                            <TextBlock Text="..." VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"
-                                                       Margin="0 0 0 1"/>
+                                        <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">
+                                            <TextBlock Text="{Binding Character}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
                                         </Border>
 
-                                        <TextBlock Text="..." VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
-                        <DataGridTextColumn Header="Position" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="Email Address" IsReadOnly="True" Width="*"/>
-                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" Width="*"/>
+
+                        <DataGridTextColumn Header="Position" IsReadOnly="True" Width="auto" Binding="{Binding Position}"/>
+                        <DataGridTextColumn Header="Email Address" IsReadOnly="True" Width="auto" Binding="{Binding Email}"/>
+                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" Width="auto" Binding="{Binding Phone}"/>
 
                         <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
@@ -207,14 +205,14 @@
                                         <Button Style="{StaticResource gridEditButton}">
                                             <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}"/>
                                         </Button>
-                                        <Button Style="{StaticResource gridRemoveButton}">
+                                        <Button Style="{StaticResource gridRemoveButton}" Margin="5 0 0 0">
                                             <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}"/>
                                         </Button>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
                 
