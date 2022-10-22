@@ -7,24 +7,38 @@
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
-    <Border Background="#eff2f7" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+    <Border CornerRadius="10" Background="#eff2f7">
 
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!--Left Menu -->
+            <!--TaskBar-->
+            <Grid Grid.Row="0">
+                <Border Background="Transparent" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">                    
+                </Border>
+            </Grid>
             
-            <Grid>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Border Background="Transparent" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+                </Border>
+            </Grid>
+            
+            <!--Left Menu -->            
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 
                 <!--Menu Icon-->
-                <Button HorizontalAlignment="Left" Margin="20 28 0 35">
+                <Button Grid.Row ="0" HorizontalAlignment="Left" Margin="20 0 0 35">
                     <Icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
                 </Button>
 
@@ -52,34 +66,34 @@
                         <!--Menu Buttons-->
                         <StackPanel DockPanel.Dock="Top">
                             <Button Style="{StaticResource menuButton}">
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" Width="140">
                                     <Icon:PackIconMaterial Kind="HomeVariant" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Dashboard"/>
                                 </StackPanel>
                             </Button>
-                        
-                            <Button Style="{StaticResource menuButton}">
+
+                            <Button Style="{StaticResource menuButton}" Width="140">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="CalendarClock" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Events"/>
                                 </StackPanel>
                             </Button>
-                        
-                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White">
+
+                            <Button Style="{StaticResource menuButton}" Background="#7b5cd6" Foreground="White" Width="140">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="AccountMultipleOutline" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Members"/>
                                 </StackPanel>
                             </Button>
-                        
-                            <Button Style="{StaticResource menuButton}">
+
+                            <Button Style="{StaticResource menuButton}" Width="140">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="CashMultiple" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Wallet"/>
                                 </StackPanel>
                             </Button>
-                        
-                            <Button Style="{StaticResource menuButton}">
+
+                            <Button Style="{StaticResource menuButton}" Width="140">
                                 <StackPanel Orientation="Horizontal">
                                     <Icon:PackIconMaterial Kind="ForumOutline" Style="{StaticResource menuButtonIcon}"/>
                                     <TextBlock Text="Messages"/>
@@ -87,8 +101,8 @@
                             </Button>
                         </StackPanel>
 
-                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20">
-                            <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource menuButton}" VerticalAlignment="Bottom" DockPanel.Dock="Bottom" Margin="15 0 15 20" Click="Button_Click">
+                            <StackPanel Orientation="Horizontal" Width="140">
                                 <Icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
                                 <TextBlock Text="Logout"/>
                             </StackPanel>
@@ -99,9 +113,8 @@
                     </DockPanel>
                 </Border>
             </Grid>
-            
             <!--Main Section-->
-            <Grid Grid.Column="1" Margin="30 20 20 20">
+            <Grid Grid.Row="1" Grid.Column="1" Margin="30 0 20 20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -123,11 +136,11 @@
                 </Grid>
                 
                 <!--Top Button-->
-                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc" HorizontalAlignment="Right">
+                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Cog"/>
                 </Button>
                 
-                <Button Style="{StaticResource topButton}" Margin="0 0 20 0" HorizontalAlignment="Right">
+                <Button Style="{StaticResource topButton}" Margin="0 0 60 0" HorizontalAlignment="Right">
                     <Icon:PackIconMaterial Kind="Bell"/>
                 </Button>
                 
@@ -136,7 +149,7 @@
                            HorizontalAlignment="Left" Foreground="#121518"/>
                 
                 <!--Add Button-->
-                <Button Style="{StaticResource addButton}">
+                <Button Style="{StaticResource ButtonStyle1}">
                     <StackPanel Orientation="Horizontal">
                         <Icon:PackIconMaterial Kind="Plus" VerticalAlignment="Center" Width="11" Height="11" Margin="0 1 8 0"/>
                         <TextBlock Text="Add New Member"/>
@@ -168,8 +181,11 @@
                 </Grid>
 
                 <!--Memeber Datagrid-->
-                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" x:Name="membersDataGrid">
+                <DataGrid Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}"
+                          Grid.Row="5" x:Name="membersDataGrid" MouseDoubleClick="DataGrid_MouseLeftButtonDoubleClick">
                     <DataGrid.Columns>
+                        <!--Check Box-->
                         <DataGridCheckBoxColumn CanUserResize="False" Width="auto" ElementStyle="{StaticResource CheckBoxStyle1}">
                             <DataGridCheckBoxColumn.HeaderTemplate>
                                 <DataTemplate>
@@ -178,13 +194,16 @@
                             </DataGridCheckBoxColumn.HeaderTemplate>
                         </DataGridCheckBoxColumn>
 
+                        <!--#-->
                         <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Number}"/>
 
-                        <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="auto">
+                        <!--Members-->
+                        <DataGridTemplateColumn Header="Member" IsReadOnly="True" Width="*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">
+                                        <!--<Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="{Binding BgColor}">-->
+                                        <Border Width="25" Height="25" CornerRadius="50" Margin="0 0 10 0" Background="BlueViolet">
                                             <TextBlock Text="{Binding Character}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White" Margin="0 0 0 1"/>
                                         </Border>
 
@@ -194,10 +213,12 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTextColumn Header="Position" IsReadOnly="True" Width="auto" Binding="{Binding Position}"/>
-                        <DataGridTextColumn Header="Email Address" IsReadOnly="True" Width="auto" Binding="{Binding Email}"/>
-                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" Width="auto" Binding="{Binding Phone}"/>
+                        <!--Three POsition Email Phone-->
+                        <DataGridTextColumn Header="Position" IsReadOnly="True" Width="*" Binding="{Binding Position}"/>
+                        <DataGridTextColumn Header="Email Address" IsReadOnly="True" Width="*" Binding="{Binding Email}"/>
+                        <DataGridTextColumn Header="Phone Number" IsReadOnly="True" Width="*" Binding="{Binding Phone}"/>
 
+                        <!--Operations-->
                         <DataGridTemplateColumn Header="Operations" IsReadOnly="True" Width="auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -249,4 +270,6 @@
         </Grid>
         
     </Border>
+    
+    
 </Window>
